@@ -23,8 +23,23 @@ userNameText.addEventListener("click", function() {
     for(let i = 0; i < data.length; i++) 
         {
             //dynamically create a div element for each repo and append it to the infoContainer div
-            let repoDiv = document.createElement("p");
-            repoDiv.textContent = data[i].name;
+            let repoDiv = document.createElement("div");
+            repoDiv.classList.add("repoDiv");
+
+            let repoName = document.createElement("p");
+            repoName.classList.add("repoName");
+
+
+            let repoForks = document.createElement("p");
+            repoForks.classList.add("repoForks");
+            repoForks.textContent = "Forks: " + data[i].forks_count;
+
+            //append the repoForks element to the repoDiv
+            repoDiv.appendChild(repoName);
+            repoDiv.appendChild(repoForks);
+
+            //set the text content of the repoName element to the name of the repo
+            repoName.textContent = "Repo name: " + data[i].name;
             repoContainer.appendChild(repoDiv);
         }
 });

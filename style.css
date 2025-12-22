@@ -16,3 +16,13 @@
     width: 50%;
     background-color: #f0f0f0; gap: 1rem;
 }
+
+.repoDiv
+{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 1rem;
+    width: 25%;
+    height: 150px;
+}
