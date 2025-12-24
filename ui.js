@@ -5,17 +5,11 @@ repoTitleDiv.classList.add("repoTitleDiv");
 let repoContainer = document.createElement("div");
 repoContainer.classList.add("repoContainer");
 
-// let statsContainer = document.createElement("div");
-// statsContainer.classList.add("statsContainer");
 
-// let testP = document.createElement("p");
-// testP.textContent = "This is a test paragraph";
-// statsContainer.appendChild(testP);
+let totalForks = 0;
+let totalWatchers = 0;
+let totalStars = 0;
 
-
-
-
-// infoContainer.appendChild(statsContainer);
 infoContainer.appendChild(repoContainer);
 
 //add event listener to the GetName button to get the username from the input field
@@ -25,10 +19,21 @@ userNameText.addEventListener("click", function() {
     
 
   let repoSectionTitle = document.getElementById("repoTitle");
-  repoSectionTitle.innerHTML += " for " + userNameValue;
+  repoSectionTitle.innerHTML = "Repository information for " + userNameValue;
   //call the API to get the data for the username typed
     getData(userNameValue).then((data) => {
     console.log(data);
+
+    //if there is already a child node in the repoContainer, remove it before appending new ones
+    if(repoContainer.hasChildNodes())
+    {
+      repoContainer.replaceChildren();
+
+      //reset the star/watcher/fork/repo count to 0 before appending new ones
+      totalForks = 0;
+      totalWatchers = 0;
+      totalStars = 0;
+    }
 
     for(let i = 0; i < data.length; i++) 
         {
@@ -48,10 +53,16 @@ userNameText.addEventListener("click", function() {
             repoWatchers.classList.add("repoWatchers");
             repoWatchers.textContent = "Watchers: " + data[i].watchers_count;
             
+            
+            let repoStars = document.createElement("p");
+            repoWatchers.classList.add("repoStars");
+            repoStars.textContent = "Stars: " + data[i].stargazers_count;
+
             //append the repoForks element to the repoDiv
             repoDiv.appendChild(repoName);
             repoDiv.appendChild(repoForks);
             repoDiv.appendChild(repoWatchers);
+            repoDiv.appendChild(repoStars);
 
             //set the text content of the repoName element to the name of the repo
             repoName.textContent = "Repo name: " + data[i].name;
@@ -59,10 +70,7 @@ userNameText.addEventListener("click", function() {
 
 
             //total the number of forks, watchers, and repos. Append them to the repoStats div.
-            let totalForks = 0;
-            let totalWatchers = 0;
             let totalRepos = data.length;
-            let totalStars = 0;
             totalStars += data[i].stargazers_count;
             totalForks += data[i].forks_count;
             totalWatchers = data[i].watchers_count;
