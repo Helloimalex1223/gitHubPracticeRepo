@@ -16,7 +16,6 @@ body, html
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #f0f0f0;
     height: 100%;
 }
 .repoContainer
@@ -27,11 +26,11 @@ body, html
     flex-direction: row;
     width: 50%;
     max-height: 70vw;
-    background-color: #f0f0f0;
+    background-color: rgb(232, 232, 255);
     gap: 1rem;
-    padding: 2rem;
-    overflow-y: auto;
+    overflow-y: scroll;
 }
+
 
 .repoDiv
 {
@@ -41,6 +40,7 @@ body, html
     align-items: center;
     justify-content: center;
     border: 1px solid black;
+    background-color: white;
     padding: 1rem;
     min-width: 25%;
     min-height: 100%;

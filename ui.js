@@ -5,6 +5,7 @@ repoTitleDiv.classList.add("repoTitleDiv");
 let repoContainer = document.createElement("div");
 repoContainer.classList.add("repoContainer");
 
+let errorText = document.createElement("p");
 
 let totalForks = 0;
 let totalWatchers = 0;
@@ -12,11 +13,14 @@ let totalStars = 0;
 
 infoContainer.appendChild(repoContainer);
 
+userNameField = document.getElementById("input");
+
 //add event listener to the GetName button to get the username from the input field
 let userNameText = document.getElementById("getName");
 userNameText.addEventListener("click", function() {
-  let userNameValue = document.getElementById("input").value;
-    
+  let userNameValue = userNameField.value;
+  //clear the input field after getting the value
+  userNameField.value= "";
 
   let repoSectionTitle = document.getElementById("repoTitle");
   repoSectionTitle.innerHTML = "Repository information for " + userNameValue;
@@ -24,6 +28,7 @@ userNameText.addEventListener("click", function() {
     getData(userNameValue).then((data) => {
     console.log(data);
 
+    errorText.textContent = "";
     //if there is already a child node in the repoContainer, remove it before appending new ones
     if(repoContainer.hasChildNodes())
     {
@@ -34,6 +39,11 @@ userNameText.addEventListener("click", function() {
       totalWatchers = 0;
       totalStars = 0;
     }
+
+    //add styles after the repoContainer is built
+    repoContainer.style.padding = "2rem";
+    repoContainer.style.border = "1px solid black";
+
 
     for(let i = 0; i < data.length; i++) 
         {
@@ -87,10 +97,18 @@ userNameText.addEventListener("click", function() {
 
 }})
 .catch((error) => {
+      if(repoContainer.hasChildNodes())
+    {
+      repoContainer.replaceChildren();
+
+      //reset the star/watcher/fork/repo count to 0 before appending new ones
+      totalForks = 0;
+      totalWatchers = 0;
+      totalStars = 0;
+    }
     console.log(error);
-    let errorText = document.createElement("p");
     errorText.textContent = error;
-    infoContainer.appendChild(errorText);
+    repoContainer.appendChild(errorText);
   })
 
 });
