@@ -11,6 +11,15 @@ let totalForks = 0;
 let totalWatchers = 0;
 let totalStars = 0;
 
+let dropDownMenu = document.getElementById("sort");
+
+dropDownMenu.addEventListener("change", function() {
+    let dropDownSelection = dropDownMenu.value;
+    console.log("Dropdown selection changed to: " + dropDownSelection);
+    //you can add functionality here to sort the displayed repositories based on the selected option
+});
+
+
 infoContainer.appendChild(repoContainer);
 
 userNameField = document.getElementById("input");
@@ -18,6 +27,7 @@ userNameField = document.getElementById("input");
 //add event listener to the GetName button to get the username from the input field
 let userNameText = document.getElementById("getName");
 userNameText.addEventListener("click", function() {
+  repoContainer.textContent = "loading repositories...";
   let userNameValue = userNameField.value;
   //clear the input field after getting the value
   userNameField.value= "";
@@ -45,7 +55,14 @@ userNameText.addEventListener("click", function() {
     repoContainer.style.border = "1px solid black";
 
 
-    for(let i = 0; i < data.length; i++) 
+    if(data.length === 0)
+    {
+      repoContainer.textContent = "This user has no repositories.";
+      return;
+    }
+    else
+    {
+          for(let i = 0; i < data.length; i++) 
         {
             //dynamically create a div element for each repo and append it to the infoContainer div
             let repoDiv = document.createElement("div");
@@ -83,7 +100,7 @@ userNameText.addEventListener("click", function() {
             let totalRepos = data.length;
             totalStars += data[i].stargazers_count;
             totalForks += data[i].forks_count;
-            totalWatchers = data[i].watchers_count;
+            totalWatchers += data[i].watchers_count;
 
             let repoCount = document.getElementById("repoCount");
             let forkCount = document.getElementById("forkCount");
@@ -95,7 +112,8 @@ userNameText.addEventListener("click", function() {
             forkCount.textContent = totalForks;
             watcherCount.textContent = totalWatchers;
 
-}})
+}
+    }})
 .catch((error) => {
       if(repoContainer.hasChildNodes())
     {

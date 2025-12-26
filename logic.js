@@ -1,10 +1,8 @@
-async function getData(userName) {
+async function getData(userName, sortParam, sortOrder) {
     const url = `https://api.github.com/users/${userName}/repos`;
     try {
         const response = await fetch(url,{
             headers: {
-                Accept: "application/vnd.github+json"
-                // Authorization: "token YOUR_TOKEN_HERE" // optional
             }
         });
         if (!response.ok) {

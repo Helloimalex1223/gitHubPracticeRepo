@@ -10,9 +10,21 @@
 </head>
 <body>
     <div class="container">
+
         <h1>GitHub API Displayer</h1>
+        <div class="menuOptions">
+
         <input type="text" id="input" placeholder="Type GitHub username">
         <button id="getName">Get Repos</button>
+        
+        
+    <label for="sort">Sort by most:    <select name="sort" id="sort">
+        <option value="stars">Stars</option>
+        <option value="forks">Forks</option>
+        <option value="numberOfRepos">Number of repos</option>
+    </select> </label>
+
+        </div>
 
         <div class="infoAPI">
             <div id="infoContainer">
